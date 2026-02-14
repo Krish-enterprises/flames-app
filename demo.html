@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Wish 💖</title>
+
+<style>
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(270deg,#ff758c,#ff7eb3,#ff4d6d,#ff9a9e);
+  background-size: 800% 800%;
+  animation: bg 10s infinite;
+
+  font-family: "Poppins", sans-serif;
+  overflow: hidden;
+}
+
+/* Background animation */
+@keyframes bg {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
+}
+
+/* Scrolling Text */
+.scrolling-text {
+  width:100%;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
+.scrolling-text span {
+  display:inline-block;
+  padding-left:100%;
+  font-size:3em;
+  font-weight:bold;
+  color:white;
+
+  animation: scroll 10s linear infinite;
+}
+
+@keyframes scroll {
+  from {transform:translateX(0);}
+  to {transform:translateX(-100%);}
+}
+
+/* Input Section */
+.input-container {
+  margin-top:30px;
+  display:flex;
+  gap:10px;
+}
+
+input {
+  padding:10px;
+  font-size:1em;
+  border:none;
+  border-radius:6px;
+  outline:none;
+}
+
+button {
+  padding:10px 20px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  background:white;
+  font-weight:bold;
+  transition:0.3s;
+}
+
+button:hover {
+  transform:scale(1.1);
+  background:#ffe6ea;
+}
+
+/* Main Heart */
+.main-heart {
+  margin-top:40px;
+  font-size:100px;
+  display:none;
+
+  animation: beat 1s infinite,
+             glow 2s infinite alternate;
+}
+
+@keyframes beat {
+  0% {transform:scale(1);}
+  50% {transform:scale(1.3);}
+  100% {transform:scale(1);}
+}
+
+@keyframes glow {
+  from {text-shadow:0 0 10px red;}
+  to {text-shadow:0 0 40px pink;}
+}
+
+/* Floating Hearts */
+.heart {
+  position:absolute;
+  font-size:25px;
+  animation: floatUp linear forwards;
+  opacity:0.9;
+}
+
+@keyframes floatUp {
+  from {
+    transform:translateY(0) scale(1);
+    opacity:1;
+  }
+  to {
+    transform:translateY(-800px) scale(1.5);
+    opacity:0;
+  }
+}
+
+/* Valentine Message */
+.message {
+  margin-top:20px;
+  font-size:1.5em;
+  color:white;
+  font-weight:bold;
+  display:none;
+  animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+  from {opacity:0;}
+  to {opacity:1;}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Scrolling Text -->
+<div class="scrolling-text">
+  <span id="scrollText">Buddy!!! 💖</span>
+</div>
+
+<!-- Input -->
+<div class="input-container">
+  <input type="text" id="nameInput" placeholder="Enter your lover name">
+  <button onclick="displayHello()">Submit</button>
+</div>
+
+<!-- Main Heart -->
+<div class="main-heart" id="mainHeart">💖</div>
+
+<!-- Valentine Message -->
+<div class="message" id="valentineMsg"></div>
+
+
+<script>
+
+const input = document.getElementById("nameInput");
+
+/* Enter key support */
+input.addEventListener("keypress", function(e){
+  if(e.key === "Enter"){
+    displayHello();
+  }
+});
+
+/* Main Function */
+function displayHello(){
+
+  const name = input.value.trim();
+  const scrollText = document.getElementById("scrollText");
+  const heart = document.getElementById("mainHeart");
+  const msg = document.getElementById("valentineMsg");
+
+  if(!name) return;
+
+  /* Change scrolling text */
+  scrollText.textContent = `Hello ${name}! 💕`;
+
+  /* Show heart */
+  heart.style.display = "block";
+
+  /* Valentine Message */
+  msg.style.display = "block";
+  msg.innerHTML = `
+    💝 Happy Valentine's Day, ${name}! 💝 <br>
+    You make my life more beautiful 💕
+  `;
+
+  /* Create floating hearts */
+  createHearts();
+}
+
+
+/* Floating Hearts Generator */
+function createHearts(){
+
+  for(let i=0;i<30;i++){
+
+    setTimeout(()=>{
+
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+
+      heart.style.left = Math.random()*100 + "vw";
+      heart.style.animationDuration =
+        3 + Math.random()*4 + "s";
+
+      document.body.appendChild(heart);
+
+      setTimeout(()=>{
+        heart.remove();
+      },7000);
+
+    }, i*200);
+  }
+}
+
+</script>
+
+</body>
+</html>

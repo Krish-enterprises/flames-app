@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLAMES 💖🔥</title>
+
+<style>
+    /* Row Layout */
+.input-row{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+/* File Input Style */
+.input-row input[type="file"]{
+  width:120px;
+  font-size:0.8em;
+  cursor:pointer;
+}
+
+/* Make Mobile Friendly */
+@media(max-width:600px){
+  .input-row{
+    flex-direction:column;
+  }
+
+  .input-row input[type="file"]{
+    width:100%;
+  }
+}
+
+    .upload-section{
+  margin-top:10px;
+  display:flex;
+  gap:10px;
+}
+
+/* Side Images */
+.side-img{
+  position:fixed;
+  top:50%;
+  transform:translateY(-50%);
+  width:220px;
+  height:300px;
+  object-fit:cover;
+
+  border-radius:20px;
+  border:6px solid gold;
+
+  box-shadow:
+    0 0 20px rgba(255,215,0,0.7),
+    0 0 40px rgba(255,105,180,0.5);
+
+  display:none;
+
+  animation:floatSide 4s ease-in-out infinite;
+}
+
+.left-img{
+  left:30px;
+}
+
+.right-img{
+  right:30px;
+}
+
+@keyframes floatSide{
+  0%,100%{
+    transform:translateY(-50%) translateY(0px);
+  }
+  50%{
+    transform:translateY(-50%) translateY(-15px);
+  }
+}
+
+/* Hide on small screen */
+@media(max-width:1000px){
+  .side-img{
+    display:none !important;
+  }
+}
+
+/* Input Container */
+.input-container{
+  margin-top:20px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  align-items:center;
+}
+
+/* Inputs */
+.input-container input{
+  width:260px;
+  padding:12px 15px;
+
+  font-size:1.05em;
+  font-weight:600;
+
+  border:none;
+  border-radius:12px;
+
+  background:linear-gradient(145deg,#ff9a9e,#fad0c4);
+
+  color:#333;
+
+  box-shadow:
+    4px 4px 10px rgba(0,0,0,0.2),
+   -4px -4px 10px rgba(255,255,255,0.6);
+
+  outline:none;
+
+  transition:0.3s ease;
+}
+
+/* Input Hover / Focus */
+.input-container input:focus{
+  transform:scale(1.05);
+
+  box-shadow:
+    0 0 15px rgba(255,105,180,0.8),
+    4px 4px 12px rgba(0,0,0,0.25);
+}
+
+/* Placeholder Color */
+.input-container input::placeholder{
+  color:#555;
+  font-weight:500;
+}
+
+
+/* Button */
+.input-container button{
+  width:260px;
+  padding:12px;
+
+  font-size:1.1em;
+  font-weight:bold;
+
+  border:none;
+  border-radius:14px;
+
+  background:linear-gradient(135deg,#ff4d6d,#ff758c,#ff9a9e);
+
+  color:white;
+
+  cursor:pointer;
+
+  letter-spacing:1px;
+
+  box-shadow:
+    0 6px 15px rgba(255,0,100,0.5),
+    inset 0 -3px 5px rgba(0,0,0,0.2);
+
+  transition:0.3s ease;
+}
+
+/* Button Hover */
+.input-container button:hover{
+  transform:translateY(-3px) scale(1.03);
+
+  box-shadow:
+    0 10px 25px rgba(255,0,100,0.7),
+    inset 0 -3px 5px rgba(0,0,0,0.3);
+}
+
+/* Button Click */
+.input-container button:active{
+  transform:translateY(1px) scale(0.98);
+
+  box-shadow:
+    0 4px 8px rgba(255,0,100,0.5),
+    inset 0 3px 6px rgba(0,0,0,0.3);
+}
+@keyframes glowBorder{
+  0%{box-shadow:0 0 5px hotpink;}
+  50%{box-shadow:0 0 20px deeppink;}
+  100%{box-shadow:0 0 5px hotpink;}
+}
+
+.input-container input:focus{
+  animation:glowBorder 1.5s infinite;
+}
+
+body{
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  font-family:Arial, sans-serif;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  background:linear-gradient(270deg,#debbc1,#f398a7,#ff9a9e,#ffc3d8);
+  background-size:800% 800%;
+  animation:bg 10s infinite;
+
+  
+}
+
+@keyframes bg{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* Scrolling Text Fix */
+/* === SCROLLING TEXT (FINAL FIX) === */
+
+.scrolling-text{
+  width:100vw;              /* Full screen width */
+  overflow:hidden;
+  position:relative;
+  margin-bottom:20px;
+}
+
+.scrolling-text span{
+  display:inline-block;
+
+  white-space:nowrap;
+
+  padding-left:100vw;       /* Start outside screen */
+
+  font-size:2.5em;
+  font-weight:900;
+
+  background:linear-gradient(
+    90deg,
+    #ff0066,
+    #ffcc00,
+    #00ffcc,
+    #6600ff,
+    #ff0066
+  );
+
+  background-size:300% 100%;
+
+  background-clip:text;
+  -webkit-background-clip:text;
+
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+
+  text-shadow:
+    0 0 12px rgba(255,0,150,0.8),
+    0 0 25px rgba(255,0,255,0.6);
+
+  animation:
+    scrollText 15s linear infinite,
+    gradientMove 4s linear infinite,
+    glowPulse 2s ease-in-out infinite;
+}
+
+
+/* Movement */
+@keyframes scrollText{
+  from{
+    transform:translateX(0);
+  }
+  to{
+    transform:translateX(-200%);
+  }
+}
+
+
+/* @keyframes scroll{
+  from{ transform: translateX(0); }
+  to{ transform: translateX(-100%); }
+} */
+
+@keyframes gradientMove{
+  from{ background-position:0% 50%; }
+  to{ background-position:100% 50%; }
+}
+
+@keyframes glowPulse{
+  0%,100%{
+    text-shadow:
+      0 0 8px rgba(255,0,100,0.6),
+      0 0 16px rgba(255,0,150,0.4);
+  }
+  50%{
+    text-shadow:
+      0 0 16px rgba(255,0,150,1),
+      0 0 30px rgba(255,0,255,0.8);
+  }
+}
+
+/* @keyframes wave{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-6px); }
+} */
+
+/* Input Area */
+.input-container{
+  margin-top:15px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items:center;
+}
+
+input,button{
+  padding:10px;
+  border:none;
+  border-radius:6px;
+  font-size:1em;
+  width:220px;
+}
+
+button{
+  background:white;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+button:hover{
+  background:#ffe6ea;
+}
+
+/* Heart */
+#mainHeart{
+  font-size:70px;
+  display:none;
+
+  animation:beat 1s infinite,
+            glow 2s infinite alternate;
+}
+
+@keyframes beat{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.3);}
+}
+
+@keyframes glow{
+  from{text-shadow:0 0 10px red;}
+  to{text-shadow:0 0 30px pink;}
+}
+
+/* Message */
+#msg,#flamesResult{
+  margin-top:8px;
+  color:rgb(255, 255, 255);
+  font-size:1.2em;
+  text-align:center;
+  font-weight:bold;
+  display:none;
+}
+
+/* Floating Hearts */
+.heart{
+  position:absolute;
+  font-size:22px;
+  animation:floatUp linear forwards;
+}
+
+@keyframes floatUp{
+  from{opacity:1;}
+  to{
+    transform:translateY(-700px);
+    opacity:0;
+  }
+}
+
+/* Photo */
+#photo{
+  margin-top:8px;
+  display:none;
+}
+
+#photo img{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  border:3px solid white;
+  object-fit:cover;
+}
+
+/* Share */
+#shareBtn{
+  margin-top:100px;
+  display:none;
+  background:#d31353;
+}
+/* Card Area */
+
+#cardArea{
+    
+  width:100%;
+  min-height:100vh;
+  padding:20px 0;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+
+  overflow:visible;
+  box-sizing:border-box;
+  
+  
+}
+
+
+/* Scroll Animation */
+@keyframes scrollText{
+  from{
+    transform:translateX(0%);
+  }
+  to{
+    transform:translateX(-100%);
+  }
+}
+/* FINAL CARD DESIGN */
+
+#finalCard{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.final-box{
+  width:420px;
+  padding:25px;
+
+  background:white;
+  border-radius:25px;
+
+  box-shadow:0 0 40px rgba(255,0,100,.4);
+
+  text-align:center;
+
+  animation:pulseCard 2s infinite;
+}
+
+@keyframes pulseCard{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.03);}
+}
+
+.final-img{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid hotpink;
+  margin:5px;
+}
+
+.final-heart{
+  font-size:60px;
+  margin:10px 0;
+  animation:beat 1s infinite;
+}
+
+#finalNames{
+  color:#ff0055;
+  margin:10px 0;
+}
+
+#finalMsg,#finalFlames{
+  font-weight:bold;
+  color:#444;
+}
+
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+</head>
+
+<body>
+
+<!-- Side Images -->
+<img id="leftSideImg" class="side-img left-img">
+<img id="rightSideImg" class="side-img right-img">
+
+       <!-- Music Players -->
+<audio id="musicFriends" src="music/friends.mp3"></audio>
+<audio id="musicLove" src="music/love.mp3"></audio>
+<audio id="musicAffection" src="music/affection.mp3"></audio>
+<audio id="musicMarriage" src="music/marriage.mp3"></audio>
+<audio id="musicEnemy" src="music/enemy.mp3"></audio>
+<audio id="musicSiblings" src="music/siblings.mp3"></audio>
+
+<div id="cardArea">
+<!-- Scroll -->
+<div class="scrolling-text">
+  <span id="scrollText">Krish&nbsp;Enterprise Pvt. Ltd!!!</span>
+
+</div>
+
+<!-- Inputs -->
+<div class="input-container">
+
+  <!-- Your Name + Image -->
+  <div class="input-row">
+    <input type="text" id="yourName" placeholder="Your Name">
+
+    <input type="file" id="leftImage" accept="image/*">
+  </div>
+
+  <!-- Girlfriend Name + Image -->
+  <div class="input-row">
+    <input type="text" id="gfName" placeholder="Favorite One's Name">
+
+    <input type="file" id="rightImage" accept="image/*">
+  </div>
+
+  <!-- Submit -->
+  <button onclick="startLove()">💕 Submit 💕</button>
+
+</div>
+<!-- ================= FINAL DOWNLOAD CARD ================= -->
+
+<div id="finalCard" style="display:none">
+
+  <div class="final-box">
+
+    <img id="finalLeft" class="final-img" />
+    <img id="finalRight" class="final-img" />
+
+    <h1 id="finalNames"></h1>
+
+    <div class="final-heart">💖</div>
+
+    <p id="finalMsg"></p>
+
+    <p id="finalFlames"></p>
+
+  </div>
+
+</div>
+
+<!-- ======================================================= -->
+
+
+<!-- Heart -->
+<div id="mainHeart">💖</div>
+
+<!-- Messages -->
+<div id="msg"></div>
+
+<div id="flamesResult"></div>
+
+<!-- Share -->
+<button id="shareBtn" onclick="shareLove()">Share 💌</button>
+<button onclick="downloadCard()">📥 Download Card</button>
+<button onclick="downloadReel()">🎥 Download Reel</button>
+
+
+
+</div>
+
+<script>
+
+/* Load Side Image */
+function loadSideImage(file, imgId){
+
+  const reader = new FileReader();
+
+  reader.onload = function(){
+
+    const img = document.getElementById(imgId);
+
+    img.src = reader.result;
+    img.style.display = "block";
+  };
+
+  reader.readAsDataURL(file);
+}
+
+
+/* Stop All Music */
+function stopAllMusic(){
+
+  document.querySelectorAll("audio").forEach(audio=>{
+    audio.pause();
+    audio.currentTime = 0;
+  });
+}
+
+
+/* Play Music Based on FLAMES */
+function playFlamesMusic(result){
+
+  stopAllMusic();
+
+  if(result.includes("Friends")){
+    document.getElementById("musicFriends").play();
+  }
+  else if(result.includes("Love")){
+    document.getElementById("musicLove").play();
+  }
+  else if(result.includes("Affection")){
+    document.getElementById("musicAffection").play();
+  }
+  else if(result.includes("Marriage")){
+    document.getElementById("musicMarriage").play();
+  }
+  else if(result.includes("Enemy")){
+    document.getElementById("musicEnemy").play();
+  }
+  else if(result.includes("Siblings")){
+    document.getElementById("musicSiblings").play();
+  }
+}
+
+
+/* FLAMES Logic */
+function calculateFlames(name1, name2){
+
+  let a = name1.toLowerCase().replace(/\s/g,"");
+  let b = name2.toLowerCase().replace(/\s/g,"");
+
+  for(let i=0;i<a.length;i++){
+
+    const ch = a[i];
+
+    if(b.includes(ch)){
+      a = a.replace(ch,"");
+      b = b.replace(ch,"");
+    }
+  }
+
+  const count = a.length + b.length;
+
+  const flames = ["Friends","Love","Affection","Marriage","Enemy","Siblings"];
+
+  const index = (count-1)%6;
+
+  const meanings = {
+    "Friends":"🤝 Best Friends",
+    "Love":"❤️ True Love",
+    "Affection":"💞 Deep Affection",
+    "Marriage":"💍 Future Marriage",
+    "Enemy":"😅 Love-Hate",
+    "Siblings":"👫 Like Siblings"
+  };
+
+  return flames[index]+" — "+meanings[flames[index]];
+}
+
+
+/* Floating Hearts */
+function createHearts(){
+
+  for(let i=0;i<25;i++){
+
+    setTimeout(()=>{
+
+      const h = document.createElement("div");
+
+      h.className = "heart";
+      h.innerHTML = "❤️";
+
+      h.style.left = Math.random()*100+"vw";
+
+      h.style.animationDuration =
+        3+Math.random()*3+"s";
+
+      document.body.appendChild(h);
+
+      setTimeout(()=>h.remove(),6000);
+
+    }, i*150);
+  }
+}
+
+
+/* MAIN FUNCTION */
+
+function startLove(){
+
+  const you = document.getElementById("yourName").value.trim();
+  const gf  = document.getElementById("gfName").value.trim();
+
+  const leftImg  = document.getElementById("leftImage").files[0];
+  const rightImg = document.getElementById("rightImage").files[0];
+
+
+  /* Validation */
+  if(you==="" || gf===""){
+    alert("Please enter both names 💕");
+    return;
+  }
+
+  if(!leftImg || !rightImg){
+    alert("📸 Insert image for more realistic result 💖");
+    return;
+  }
+
+
+  /* Scroll Text */
+  document.getElementById("scrollText").textContent =
+    `💖 ${you} ❤️ ${gf} 💖`;
+
+
+  /* Heart */
+  document.getElementById("mainHeart").style.display="block";
+
+
+  /* Message */
+  const msg = document.getElementById("msg");
+
+  msg.style.display="block";
+
+  msg.innerHTML = `
+    💝 Happy Valentine's Day 💝<br>
+    ${you} & ${gf} Forever 💕
+  `;
+
+
+  /* FLAMES */
+  const result = calculateFlames(you, gf);
+
+  document.getElementById("flamesResult").style.display="block";
+
+  document.getElementById("flamesResult").innerHTML =
+    `🔥 FLAMES Result 🔥<br>${result}`;
+
+
+  /* Music */
+  playFlamesMusic(result);
+
+
+  /* Show Images */
+  loadSideImage(leftImg, "leftSideImg");
+  loadSideImage(rightImg,"rightSideImg");
+
+
+  document.getElementById("shareBtn").style.display="block";
+
+
+
+  createHearts();
+}
+
+
+/* Share */
+function shareLove(){
+
+  const you = document.getElementById("yourName").value;
+  const gf  = document.getElementById("gfName").value;
+
+  const text =
+   `💖 ${you} ❤️ ${gf}\nHappy Valentine's Day 💝`;
+
+  if(navigator.share){
+
+    navigator.share({
+      title:"Love Result 💕",
+      text:text,
+      url:location.href
+    });
+
+  }else{
+
+    alert("Copy this link:\n"+location.href);
+  }
+}
+/* DOWNLOAD CARD */
+/* DOWNLOAD CARD */
+
+function downloadCard(){
+
+  const final = document.getElementById("finalCard");
+
+  // Fill Data
+  final.style.display="flex";
+
+  document.getElementById("finalLeft").src =
+    document.getElementById("leftSideImg").src;
+
+  document.getElementById("finalRight").src =
+    document.getElementById("rightSideImg").src;
+
+  const you = yourName.value;
+  const gf  = gfName.value;
+
+  document.getElementById("finalNames").innerText =
+    you+" ❤️ "+gf;
+
+  document.getElementById("finalMsg").innerText =
+    "💝 Happy Valentine's Day 💝";
+
+  document.getElementById("finalFlames").innerText =
+    flamesResult.innerText;
+
+  setTimeout(()=>{
+
+    html2canvas(final,{scale:3}).then(canvas=>{
+
+      const link=document.createElement("a");
+
+      link.href=canvas.toDataURL();
+      link.download="love-card.png";
+
+      link.click();
+
+      final.style.display="none";
+
+    });
+
+  },500);
+}
+
+// reel recorder
+let recorder, chunks=[];
+
+function downloadReel(){
+
+  const final=document.getElementById("finalCard");
+
+  final.style.display="flex";
+
+  const stream = final.captureStream(30);
+
+  recorder = new MediaRecorder(stream,{
+    mimeType:"video/webm"
+  });
+
+  chunks=[];
+
+  recorder.ondataavailable=e=>chunks.push(e.data);
+
+  recorder.onstop=()=>{
+
+    const blob=new Blob(chunks,{type:"video/webm"});
+
+    const url=URL.createObjectURL(blob);
+
+    const a=document.createElement("a");
+
+    a.href=url;
+    a.download="love-reel.webm";
+    a.click();
+
+    final.style.display="none";
+  };
+
+  recorder.start();
+
+  setTimeout(()=>recorder.stop(),5000); // 5 sec video
+}
+
+
+</script>
+
+
+</body>
+</html>
