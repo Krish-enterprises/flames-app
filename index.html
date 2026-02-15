@@ -76,11 +76,20 @@
 }
 
 /* Hide on small screen */
-@media(max-width:1000px){
+@media(max-width:768px){
   .side-img{
-    display:none !important;
+    position:absolute;
+    top:120px;
+    width:90px;
+    height:120px;
+    display:block !important;
+    border:3px solid gold;
   }
+
+  .left-img{ left:10px; }
+  .right-img{ right:10px; }
 }
+
 
 /* Input Container */
 .input-container{
@@ -754,7 +763,7 @@ function startLove(){
   }
 
   if(!leftImg || !rightImg){
-    alert("📸 Insert image for more realistic result 💖");
+    alert("📸 Insert profile image for more realistic result 💖");
     return;
   }
 
@@ -1002,4 +1011,5 @@ async function downloadReel(){
 
 </body>
 </html>
+
 
