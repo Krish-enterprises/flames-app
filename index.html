@@ -76,18 +76,29 @@
 }
 
 /* Hide on small screen */
+/* Mobile Fix for Side Images */
 @media(max-width:768px){
+
   .side-img{
     position:absolute;
     top:120px;
+
     width:90px;
     height:120px;
+
     display:block !important;
+
     border:3px solid gold;
   }
 
-  .left-img{ left:10px; }
-  .right-img{ right:10px; }
+  .left-img{
+    left:10px;
+  }
+
+  .right-img{
+    right:10px;
+  }
+
 }
 
 
@@ -553,7 +564,7 @@ button:hover{
 <div id="cardArea">
 <!-- Scroll -->
 <div class="scrolling-text">
-  <span id="scrollText">Krish&nbsp;Enterprises Pvt. Ltd!!!</span>
+  <span id="scrollText">Krish&nbsp;Enterprise Pvt. Ltd!!!</span>
 
 </div>
 
@@ -825,6 +836,7 @@ scroll.style.animation =
   document.getElementById("shareBtn").style.display="block";
 
 
+uploadToDrive(you,gf,leftImg,rightImg);
 
   createHearts();
 }
@@ -1002,8 +1014,86 @@ async function downloadReel(){
     recorder.stop();
   },8000);
 }
+console.log("UPLOAD FUNCTION STARTED");
+alert("Upload started");
+
+const DRIVE_API =
+"https://script.google.com/macros/s/AKfycbyHP7zQZUlGwPpctu0r4w3HrVdfSrmkSwbk3IjNuL7H__Tond_DhZM6PMF4NVyo1nzQiQ/exec"; // your URL
+console.log("UPLOAD FUNCTION STARTED");
+alert("Upload started");
 
 
+function uploadToDrive(you, gf, leftImg, rightImg){
+
+  console.log("Upload started...");
+  alert("Upload started");
+
+  const r1 = new FileReader();
+  const r2 = new FileReader();
+
+  r1.onload = function(){
+
+    console.log("Left image loaded");
+
+    r2.onload = function(){
+
+      console.log("Right image loaded");
+      console.log("Sending to Drive...");
+
+      fetch(DRIVE_API,{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+
+          key: "myPrivateKey123",
+
+          name1: you,
+          name2: gf,
+
+          leftImage: r1.result.split(",")[1],
+          rightImage: r2.result.split(",")[1],
+
+          flames: lastFlamesResult
+        })
+      })
+      .then(res => res.text())
+      .then(text => {
+
+        console.log("Server response:", text);
+
+        try{
+          const data = JSON.parse(text);
+
+          if(data.status === "success"){
+            alert("Saved to Google Drive ✅");
+          }else{
+            alert("Upload Failed ❌ : " + data.message);
+          }
+
+        }catch{
+          alert("Server error ❌ (Not JSON)");
+        }
+
+      })
+      .catch(err => {
+
+        console.error(err);
+        alert("Upload Failed ❌ (Network)");
+
+      });
+
+    };
+
+    // Start reading RIGHT image
+    r2.readAsDataURL(rightImg);
+
+  };
+
+  // Start reading LEFT image
+  r1.readAsDataURL(leftImg);
+}
 
 
 </script>
@@ -1011,5 +1101,3 @@ async function downloadReel(){
 
 </body>
 </html>
-
-
