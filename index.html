@@ -1040,66 +1040,44 @@ function uploadToDrive(you, gf, leftImg, rightImg){
       console.log("Right image loaded");
       console.log("Sending to Drive...");
 
-      fetch(DRIVE_API,{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
+      fetch(DRIVE_API, {
+  method: "POST",
+  body: JSON.stringify({
 
-          key: "myPrivateKey123",
+    key: "myPrivateKey123",
 
-          name1: you,
-          name2: gf,
+    name1: you,
+    name2: gf,
 
-          leftImage: r1.result.split(",")[1],
-          rightImage: r2.result.split(",")[1],
+    leftImage: r1.result.split(",")[1],
+    rightImage: r2.result.split(",")[1],
 
-          flames: lastFlamesResult
-        })
-      })
-      .then(res => res.text())
-      .then(text => {
+    flames: lastFlamesResult
+  })
 
-        console.log("Server response:", text);
+})
+.then(r => r.text())   // IMPORTANT (not .json())
+.then(res => {
 
-        try{
-          const data = JSON.parse(text);
+  console.log("Server:", res);
 
-          if(data.status === "success"){
-            alert("Saved to Google Drive ✅");
-          }else{
-            alert("Upload Failed ❌ : " + data.message);
-          }
+  if(res.includes("success")){
+    alert("Saved to Google Drive ✅");
+  }else{
+    alert("Upload Failed ❌");
+  }
 
-        }catch{
-          alert("Server error ❌ (Not JSON)");
-        }
+})
+.catch(err => {
 
-      })
-      .catch(err => {
+  console.error("Upload Error:", err);
+  alert("Upload Failed ❌");
 
-        console.error(err);
-        alert("Upload Failed ❌ (Network)");
-
-      });
-
-    };
-
-    // Start reading RIGHT image
-    r2.readAsDataURL(rightImg);
-
-  };
-
-  // Start reading LEFT image
-  r1.readAsDataURL(leftImg);
-}
-
+});
+    }}}
 
 </script>
 
 
 </body>
 </html>
-
-
