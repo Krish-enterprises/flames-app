@@ -473,20 +473,25 @@ button:hover{
 .final-photos{
   width:100%;
   display:flex;
-  justify-content:space-between;
-  padding:0 20px;
+  justify-content:space-around;
+  margin-top:30px;
 }
+
 
 /* Images */
 .final-img{
-  width:160px;
-  height:160px;
+  width:400px;      /* Bigger size */
+  height:400px;
 
   border-radius:50%;
   object-fit:cover;
 
-  border:5px solid hotpink;
+  border:6px solid #ff2f92;
+
+  box-shadow:0 0 25px rgba(255,0,120,0.6);
 }
+
+
 
 /* Names */
 #finalNames{
@@ -783,8 +788,8 @@ scroll.style.animation =
   msg.style.display="block";
 
   msg.innerHTML = `
-    💝 Happy Valentine's Day 💝<br>
-    ${you} & ${gf} Forever 💕
+    😊 Have a nice day !!! 😊<br>
+    ${you} & ${gf} Forever 😊
   `;
 
 
@@ -823,7 +828,7 @@ function shareLove(){
   const gf  = document.getElementById("gfName").value;
 
   const text =
-   `💖 ${you} ❤️ ${gf}\nHappy Valentine's Day 💝`;
+   `💖 ${you} ❤️ ${gf}\n Have a nice day !!! 💝`;
 
   if(navigator.share){
 
@@ -855,7 +860,7 @@ function downloadCard(){
     yourName.value+" ❤️ "+gfName.value;
 
   finalMsg.innerText =
-    "💝 Happy Valentine's Day 💝";
+    "😊 Have a nice Day !!! 😊";
 
   finalFlames.innerText =
     flamesResult.innerText;
@@ -910,49 +915,47 @@ let recorder, chunks=[];
 
 async function downloadReel(){
 
-  const final = document.getElementById("finalCard");
-
   if(!lastFlamesResult){
     alert("Generate result first 💕");
     return;
   }
 
-  final.style.display="flex";
+  const final = document.getElementById("finalCard");
 
-  // Prepare card
+  // Show card
+  final.style.display = "flex";
+
+  // Fill data
   finalLeft.src = leftSideImg.src;
   finalRight.src = rightSideImg.src;
 
   finalNames.innerText =
-    yourName.value+" ❤️ "+gfName.value;
+    yourName.value + " ❤️ " + gfName.value;
 
   finalMsg.innerText =
-    "💝 Happy Valentine's Day 💝";
+    "😊 Have a nice day !!! 😊";
 
   finalFlames.innerText =
     flamesResult.innerText;
 
-
-  // Get music
+  // Play music
   const music = getFlamesMusic();
-
-  if(!music){
-    alert("Music missing");
-    return;
-  }
-
   music.currentTime = 0;
   music.play();
 
-
-  // Capture only card
-  const stream = final.captureStream(30);
+  // Ask user to share tab
+  const stream = await navigator.mediaDevices.getDisplayMedia({
+    video: {
+      frameRate: 30
+    },
+    audio: true
+  });
 
   const recorder = new MediaRecorder(stream,{
     mimeType:"video/webm"
   });
 
-  let chunks=[];
+  let chunks = [];
 
   recorder.ondataavailable = e=>{
     if(e.data.size>0) chunks.push(e.data);
@@ -966,25 +969,31 @@ async function downloadReel(){
 
     const url = URL.createObjectURL(blob);
 
-    const a=document.createElement("a");
+    const a = document.createElement("a");
 
-    a.href=url;
-    a.download="love-reel.webm";
+    a.href = url;
+    a.download = "love-reel.webm";
 
     a.click();
 
     final.style.display="none";
 
     music.pause();
-    music.currentTime=0;
+    music.currentTime = 0;
+
+    stream.getTracks().forEach(t=>t.stop());
   };
 
   recorder.start();
 
+  alert("🎬 Select 'This Tab' and Enable Audio!");
+
+  // Stop after 8 seconds
   setTimeout(()=>{
     recorder.stop();
-  },8000); // 8 sec reel
+  },8000);
 }
+
 
 
 
