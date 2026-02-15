@@ -1023,61 +1023,55 @@ console.log("UPLOAD FUNCTION STARTED");
 alert("Upload started");
 
 
-function uploadToDrive(you, gf, leftImg, rightImg){
+function uploadToDrive(you,gf,leftImg,rightImg){
 
   console.log("Upload started...");
-  alert("Upload started");
 
   const r1 = new FileReader();
   const r2 = new FileReader();
 
-  r1.onload = function(){
+  r1.onload = ()=>{
 
-    console.log("Left image loaded");
+    r2.onload = ()=>{
 
-    r2.onload = function(){
+      fetch(DRIVE_API,{
+        method:"POST",
+        body:JSON.stringify({
+          key:"myPrivateKey123",
+          name1:you,
+          name2:gf,
+          leftImage:r1.result.split(",")[1],
+          rightImage:r2.result.split(",")[1],
+          flames:lastFlamesResult
+        })
+      })
+      .then(res=>res.json())
+      .then(data=>{
+        console.log(data);
 
-      console.log("Right image loaded");
-      console.log("Sending to Drive...");
+        if(data.status==="success"){
+          alert("Saved to Google Drive ✅");
+        }else{
+          alert("Error ❌ " + data.message);
+        }
+      })
+      .catch(err=>{
+        console.error(err);
+        alert("Upload Failed ❌");
+      });
 
-      fetch(DRIVE_API, {
-  method: "POST",
-  body: JSON.stringify({
+    };
 
-    key: "myPrivateKey123",
+    r2.readAsDataURL(rightImg);
+  };
 
-    name1: you,
-    name2: gf,
+  r1.readAsDataURL(leftImg);
+}
 
-    leftImage: r1.result.split(",")[1],
-    rightImage: r2.result.split(",")[1],
-
-    flames: lastFlamesResult
-  })
-
-})
-.then(r => r.text())   // IMPORTANT (not .json())
-.then(res => {
-
-  console.log("Server:", res);
-
-  if(res.includes("success")){
-    alert("Saved to Google Drive ✅");
-  }else{
-    alert("Upload Failed ❌");
-  }
-
-})
-.catch(err => {
-
-  console.error("Upload Error:", err);
-  alert("Upload Failed ❌");
-
-});
-    }}}
 
 </script>
 
 
 </body>
 </html>
+
